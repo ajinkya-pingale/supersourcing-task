@@ -11,11 +11,11 @@ export class UserFormComponent implements OnInit {
   constructor(private commonService: CommonService) {}
   dateOptions = []
   userForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    email: new FormControl('',[Validators.required, Validators.email, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
-    date: new FormControl('',[Validators.required]),
-    month: new FormControl('',[Validators.required]),
-    year: new FormControl('',[Validators.required]),
+    name: new FormControl(null, [Validators.required]),
+    email: new FormControl(null,[Validators.required, Validators.email, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
+    date: new FormControl(null,[Validators.required]),
+    month: new FormControl(null,[Validators.required]),
+    year: new FormControl(null,[Validators.required]),
     Addresses: new FormArray([
       new FormGroup({
         address_line_1: new FormControl(),
@@ -50,7 +50,7 @@ export class UserFormComponent implements OnInit {
     { label: 'Female', key: 'female' },{ label: 'Other', key: 'other' }
   ]
   errorMsg = [];
-  fomrSubmitFlag: boolean = false;
+  formSubmitFlag: boolean = false;
   ngOnInit(): void {
     for(let i = 1; i <= 5; i++){
       let date = {'date': i};
@@ -68,7 +68,7 @@ export class UserFormComponent implements OnInit {
   }
 
   addUser(){
-    this.fomrSubmitFlag = true;
+    this.formSubmitFlag = true;
     if(this.userForm.valid){
       this.commonService.apiCall('post',`/users`, this.userForm.value).subscribe(
       data=>{

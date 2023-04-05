@@ -1,9 +1,10 @@
 <div class="container">
-  <div>
-    <span class="font-bold text-20" >Add User</span>
+  <div class="text-center" >
+    <span class="font-bold text-20 " >Add User</span>
 
   </div>
-  <div>
+  <hr>
+  <div class="mt-4">
     <form [formGroup]="userForm">
       <div class="row">
         <div class="col-md-6" >
@@ -13,7 +14,7 @@
             </span>
             <input pInputText placeholder="Enter Your Name" formControlName="name" [class.is-invalid]="userForm.get('name').invalid && userForm.get('name').touched" />
           </div>
-          <span class="text-danger font-16" *ngIf="userForm.get('name').invalid && userForm.get('name').touched">Name is required</span>
+          <span class="text-danger font-16" *ngIf="formSubmitFlag && userForm.get('name').invalid || userForm.get('name').touched">Name is required</span>
         </div>
         <div class="col-md-6" >
           <div class="p-inputgroup">
@@ -22,7 +23,7 @@
             </span>
             <input pInputText placeholder="Enter Your Email Id" formControlName="email" [class.is-invalid]="userForm.get('email').invalid && userForm.get('email').touched" />
           </div>
-          <span class="text-danger font-16" *ngIf="userForm.get('email').invalid && userForm.get('email').touched">Check your email id</span>
+          <span class="text-danger font-16" *ngIf="formSubmitFlag &&  userForm.get('email').invalid || userForm.get('email').touched">Check your email id</span>
         </div>
       </div>
       <br>
