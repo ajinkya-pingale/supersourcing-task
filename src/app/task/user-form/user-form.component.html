@@ -14,7 +14,7 @@
             </span>
             <input pInputText placeholder="Enter Your Name" formControlName="name" [class.is-invalid]="userForm.get('name').invalid && userForm.get('name').touched" />
           </div>
-          <span class="text-danger font-16" *ngIf="formSubmitFlag && userForm.get('name').invalid || userForm.get('name').touched">Name is required</span>
+          <span class="text-danger font-16" *ngIf="formSubmitFlag && userForm.get('name').invalid">Name is required</span>
         </div>
         <div class="col-md-6" >
           <div class="p-inputgroup">
@@ -23,21 +23,25 @@
             </span>
             <input pInputText placeholder="Enter Your Email Id" formControlName="email" [class.is-invalid]="userForm.get('email').invalid && userForm.get('email').touched" />
           </div>
-          <span class="text-danger font-16" *ngIf="formSubmitFlag &&  userForm.get('email').invalid || userForm.get('email').touched">Check your email id</span>
+          <span class="text-danger font-16" *ngIf="formSubmitFlag &&  userForm.get('email').invalid">Check your email id</span>
         </div>
       </div>
       <br>
       <div class="row">
         <div class="col-md-2" >
-          <p-dropdown [options]="dateOptions" formControlName="date" optionValue="date" optionLabel="date" placeholder="Select a Date"></p-dropdown>
+          <p-dropdown [options]="dateOptions" [class.invalid]="dateError" formControlName="date" optionValue="date" optionLabel="date" placeholder="Select a Date"></p-dropdown>
         </div>
         <div class="col-md-4" >
-          <p-dropdown [options]="monthOptions" formControlName="month" optionValue="label" style="width: 100%" optionLabel="label" placeholder="Select a Month"></p-dropdown>
+          <p-dropdown [options]="monthOptions" [class.invalid]="dateError"  formControlName="month" optionValue="label" style="width: 100%" optionLabel="label" placeholder="Select a Month"></p-dropdown>
         </div>
         <div class="col-md-4" >
-          <p-dropdown [options]="yearOption" formControlName="year" optionValue="year" optionLabel="year" placeholder="Select a Year"></p-dropdown>
+          <p-dropdown [options]="yearOption" [class.invalid]="dateError"  formControlName="year" optionValue="year" optionLabel="year" placeholder="Select a Year"></p-dropdown>
         </div>
       </div>
+      <span class="text-danger font-16" *ngIf="formSubmitFlag">
+        <span *ngIf="userForm.get('date').invalid || userForm.get('month').invalid || userForm.get('year').invalid">Date is required</span>
+      </span>
+
       <div class="row mt-4" formArrayName="Addresses">
         <div class="row" *ngFor="let eachField of AddressesControl().controls; let i=index">
             <div class="col-md-3" [formGroupName]="i">
@@ -59,9 +63,16 @@
       </div>
 
     </form>
+    <div class="mt-4" *ngIf="errorMsg.length > 0" >
+      <span class="text-danger" *ngFor="let eachError of errorMsg">
+        <li>{{eachError}}</li>
+      </span>
+    </div>
+    <div class="mt-4" *ngIf="successmsg" >
+      <span class="text-success" >{{successmsg}}</span>
+    </div>
     <div class="mt-4" >
       <button pButton pRipple label="Submit" (click)="addUser()" class="p-button-success"></button>
-
     </div>
   </div>
 

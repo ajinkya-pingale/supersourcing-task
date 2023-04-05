@@ -51,13 +51,16 @@ export class UserFormComponent implements OnInit {
   ]
   errorMsg = [];
   formSubmitFlag: boolean = false;
+  dateError: boolean = false;
+  currentDate = new Date()
+  successmsg = null;
   ngOnInit(): void {
-    for(let i = 1; i <= 5; i++){
+    for(let i = 1; i <= 30; i++){
       let date = {'date': i};
       this.dateOptions.push(date)
     }
     for( let i = 0; i < 100; i++ ){
-      let curyear = 2013;
+      let curyear = 2023;
       let year = { 'year': curyear-i }
       this.yearOption.push(year)
     }
@@ -69,12 +72,22 @@ export class UserFormComponent implements OnInit {
 
   addUser(){
     this.formSubmitFlag = true;
+    let date = new Date(`${this.userForm.value.month} ${this.userForm.value.date}, ${this.userForm.value.year}`);
+    if(this.currentDate < date){
+      this.dateError = true;
+      let msg ='Date should not be greater than current date'
+      this.errorMsg.push(msg)
+      return
+    }
     if(this.userForm.valid){
       this.commonService.apiCall('post',`/users`, this.userForm.value).subscribe(
       data=>{
         console.log(data)
+        this.userForm.reset();
+        this.successmsg = 'Data saved successfully';
       },error=>{
         console.log(error)
+        this.errorMsg = error;
       }
     )
     }else{
