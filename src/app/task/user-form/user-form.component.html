@@ -1,0 +1,67 @@
+<div class="container">
+  <div>
+    <span class="font-bold text-20" >Add User</span>
+
+  </div>
+  <div>
+    <form [formGroup]="userForm">
+      <div class="row">
+        <div class="col-md-6" >
+          <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-user"></i>
+            </span>
+            <input pInputText placeholder="Enter Your Name" formControlName="name" [class.is-invalid]="userForm.get('name').invalid && userForm.get('name').touched" />
+          </div>
+          <span class="text-danger font-16" *ngIf="userForm.get('name').invalid && userForm.get('name').touched">Name is required</span>
+        </div>
+        <div class="col-md-6" >
+          <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">
+                <i class="pi pi-envelope"></i>
+            </span>
+            <input pInputText placeholder="Enter Your Email Id" formControlName="email" [class.is-invalid]="userForm.get('email').invalid && userForm.get('email').touched" />
+          </div>
+          <span class="text-danger font-16" *ngIf="userForm.get('email').invalid && userForm.get('email').touched">Check your email id</span>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-2" >
+          <p-dropdown [options]="dateOptions" formControlName="date" optionValue="date" optionLabel="date" placeholder="Select a Date"></p-dropdown>
+        </div>
+        <div class="col-md-4" >
+          <p-dropdown [options]="monthOptions" formControlName="month" optionValue="label" style="width: 100%" optionLabel="label" placeholder="Select a Month"></p-dropdown>
+        </div>
+        <div class="col-md-4" >
+          <p-dropdown [options]="yearOption" formControlName="year" optionValue="year" optionLabel="year" placeholder="Select a Year"></p-dropdown>
+        </div>
+      </div>
+      <div class="row mt-4" formArrayName="Addresses">
+        <div class="row" *ngFor="let eachField of AddressesControl().controls; let i=index">
+            <div class="col-md-3" [formGroupName]="i">
+              <input pInputText placeholder="Enter Your Address 1" style="width: 100%" formControlName="address_line_1" />
+            </div>
+            <div class="col-md-3" [formGroupName]="i">
+              <input pInputText placeholder="Enter Your Address 2" style="width: 100%" formControlName="address_line_2" />
+            </div>
+            <div class="col-md-3" [formGroupName]="i">
+              <input pInputText placeholder="Enter Your City" style="width: 100%" formControlName="city" />
+            </div>
+            <div class="col-md-3" [formGroupName]="i">
+              <input pInputText placeholder="Enter Your State" style="width: 100%" formControlName="state" />
+            </div>
+            <div class="col-md-3 mt-4" [formGroupName]="i">
+              <input pInputText placeholder="Enter Your Country" style="width: 100%" formControlName="country" />
+            </div>
+        </div>
+      </div>
+
+    </form>
+    <div class="mt-4" >
+      <button pButton pRipple label="Submit" (click)="addUser()" class="p-button-success"></button>
+
+    </div>
+  </div>
+
+</div>
